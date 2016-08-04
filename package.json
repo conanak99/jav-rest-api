@@ -1,0 +1,17 @@
+{
+  "name": "jav-rest-api",
+  "version": "0.0.0",
+  "description": "A wrapper of DMM 18 for querying JAV actress and movie.",
+  "main": "server.js",
+  "repository": "",
+  "author": "Mostafa Eweda <mo.eweda@gmail.com>",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "~3.2.4",
+    "jp-conversion": "0.0.7",
+    "lodash": "^4.14.1",
+    "morgan": "^1.7.0",
+    "redis": "^2.6.2",
+    "request": "^2.74.0"
+  }
+}
