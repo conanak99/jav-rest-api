@@ -31,7 +31,7 @@ app.get('/api/actress', function(req, res) {
   });
 });
 
-app.get('/api/videos/', function(req, res) {
+app.get('/api/videos', function(req, res) {
   api.getVideos().then(result => {
     res.status(200).json(result);
   });
@@ -45,6 +45,8 @@ app.get('/api/videos/:actressId', function(req, res) {
     res.status(200).json(result);
   });
 });
+
+
 
 app.set('port', process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 3002);
 app.set('ip', process.env.OPENSHIFT_NODEJS_IP || process.env.IP || "127.0.0.1");
