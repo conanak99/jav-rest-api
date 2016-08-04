@@ -4,6 +4,9 @@
   "description": "A wrapper of DMM 18 for querying JAV actress and movie.",
   "main": "server.js",
   "repository": "",
+  "scripts": {
+    "start": "node server.js"
+  },
   "author": "Mostafa Eweda <mo.eweda@gmail.com>",
   "dependencies": {
     "body-parser": "^1.15.2",
