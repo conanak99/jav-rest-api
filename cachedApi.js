@@ -1,14 +1,16 @@
 "use strict";
-var redis = require("redis"),
-    client = redis.createClient({
+var redis = require("redis");
+var config = {
         host: process.env.REDIS_HOST || process.env.IP || "127.0.0.1",
         port: process.env.REDIS_PORT || 6379,
         password: process.env.REDIS_PASS 
-    });
+    };
+var    client = redis.createClient(config);
 
 class CachedApi {
     constructor() {
         this._api = require('./api');
+        console.log(config);
     }
 
     findActress(name, page = 1, resultPerPage = 100) {
