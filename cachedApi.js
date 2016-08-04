@@ -1,6 +1,10 @@
 "use strict";
 var redis = require("redis"),
-    client = redis.createClient();
+    client = redis.createClient({
+        host: process.env.REDIS_HOST || process.env.IP || "127.0.0.1",
+        port: process.env.REDIS_PORT || 6379,
+        password: process.env.REDIS_PASS 
+    });
 
 class CachedApi {
     constructor() {
