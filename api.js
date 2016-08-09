@@ -46,15 +46,19 @@ class Api {
                         id: actress.id,
                         name: actress.imageURL.large
                             .replace('http://pics.dmm.co.jp/mono/actjpgs/', '')
-                            .replace('.jpg', '').split('_')
-                            .map(_.capitalize).join(' '),
+                            .replace('.jpg', '')
+                            .replace(/[0-9]/g, '')
+                            .split('_')
+                            .map(_.capitalize)
+                            .filter(s => isNaN(s))
+                            .join(' '),
                         japanName: actress.name,
                         bust: actress.bust,
                         waist: actress.waist,
                         hip: actress.hip,
                         height: actress.height,
                         birthday: actress.birthday,
-                        imageUrl: actress.imageURL.large,
+                        imageUrl: actress.imageURL.large.replace('http', 'https'),
                         siteUrl: actress.listURL.digital
                     }
                 });
@@ -98,7 +102,7 @@ class Api {
                     return {
                         name: item.title,
                         siteUrl: item.URL,
-                        imageUrl: item.imageURL.small,
+                        imageUrl: item.imageURL.small.replace('http', 'https'),
                         date: item.date,
                         maker: item.iteminfo.maker,
                         review: item.review,

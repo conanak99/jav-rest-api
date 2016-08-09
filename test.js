@@ -1,7 +1,7 @@
 var api = require("./api");
 var converter = require("jp-conversion");
 
-var cachedApi = require("./cachedApi");
+//var cachedApi = require("./cachedApi");
 
 //ZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5
 
@@ -24,7 +24,12 @@ api.getVideos().then(rs => {
 })
 */
 
+api.findVideos('20202').then(rs => {
+    console.log(rs);
+});
 
+/*
 cachedApi.findActress('aki').then(rs => {
     console.log(rs);
 });
+*/
