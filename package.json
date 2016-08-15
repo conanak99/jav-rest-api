@@ -10,6 +10,7 @@
   "author": "Mostafa Eweda <mo.eweda@gmail.com>",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "cors": "^2.7.1",
     "express": "~3.2.4",
     "jp-conversion": "0.0.7",
     "lodash": "^4.14.1",

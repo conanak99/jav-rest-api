@@ -7,6 +7,11 @@ var http = require('http');
 var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+var cors = require('cors')
+
+
+
+
 
 var api = require("./cachedApi");
 
@@ -14,6 +19,7 @@ var express = require('express');
 
 var app = express();
 app.use(logger('dev'));
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
