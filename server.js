@@ -21,27 +21,27 @@ app.use(bodyParser.urlencoded({
 
 var server = http.createServer(app);
 
-app.use(express.static(path.resolve(__dirname, 'client')));
+app.use(express.static(path.resolve(__dirname, 'swagger')));
 
 app.get('/api/actress', function(req, res) {
   var query = req.query;
   var actressName = query.name || '';
-  api.findActress(actressName).then(result => {
-    res.status(200).json(result);
-  });
-});
-
-app.get('/api/videos', function(req, res) {
-  api.getVideos().then(result => {
+  var offset = query.offset || 1;
+  var resultPerPage = query.hits || 100;
+  
+  api.findActress(actressName, offset, resultPerPage).then(result => {
     res.status(200).json(result);
   });
 });
 
 app.get('/api/videos/:actressId', function(req, res) {
   var actressId = req.params.actressId;
-  console.log(req.params);
+  
+  var query = req.query;
+  var offset = query.offset || 1;
+  var resultPerPage = query.hits || 100;
 
-  api.findVideos(actressId).then(result => {
+  api.findVideos(actressId, offset, resultPerPage).then(result => {
     res.status(200).json(result);
   });
 });

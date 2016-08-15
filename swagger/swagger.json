@@ -1,0 +1,228 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Jav API",
+        "description": "Building your own JAV Heaven API",
+        "version": "1.0.0"
+    },
+    "host": "jav-rest-api-conanak99.c9users.io",
+    "schemes": [
+        "https"
+    ],
+    "basePath": "/api",
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/actress": {
+            "get": {
+                "summary": "Get all list of actress",
+                "description": "Get information of JAV actress",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Name of actress (partial)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Skip how many element",
+                        "required": false,
+                        "type": "number"
+                    },
+                    {
+                        "name": "hits",
+                        "in": "query",
+                        "description": "Number of result returns",
+                        "required": false,
+                        "type": "number"
+                    }
+                ],
+                "tags": [
+                    "Actress"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Result",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "count": {
+                                    "type": "number",
+                                    "description": "Result count"
+                                },
+                                "name": {
+                                    "type": "string",
+                                    "description": "Total result"
+                                },
+                                "result": {
+                                    "type": "array",
+                                    "description": "Result",
+                                    "items": {
+                                        "$ref": "#/definitions/Actress"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/videos/{actressId}": {
+            "get": {
+                "summary": "Get all videos of an actress",
+                "description": "Get information and links of JAV videos",
+                "parameters": [
+                    {
+                        "name": "actressId",
+                        "in": "path",
+                        "description": "ID of actress (From Actress API)",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Skip how many element",
+                        "required": false,
+                        "type": "number"
+                    },
+                    {
+                        "name": "hits",
+                        "in": "query",
+                        "description": "Number of result returns",
+                        "required": false,
+                        "type": "number"
+                    }
+                ],
+                "tags": [
+                    "Movie"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Result",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "count": {
+                                    "type": "number",
+                                    "description": "Result count"
+                                },
+                                "name": {
+                                    "type": "string",
+                                    "description": "Total result"
+                                },
+                                "result": {
+                                    "type": "array",
+                                    "description": "Result",
+                                    "items": {
+                                        "$ref": "#/definitions/Video"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Actress": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number",
+                    "description": "ID of actress on DMM"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Name of actress in English"
+                },
+                "japanName": {
+                    "type": "string",
+                    "description": "Name of actress in Japanese"
+                },
+                "bust": {
+                    "type": "number",
+                    "description": "Bust size"
+                },
+                "waits": {
+                    "type": "number",
+                    "description": "Waist size"
+                },
+                "hip": {
+                    "type": "number",
+                    "description": "Hip size"
+                },
+                "height": {
+                    "type": "number",
+                    "description": "Actress height (in cm)"
+                },
+                "birthday": {
+                    "type": "string",
+                    "description": "Birthdate of accress"
+                },
+                "imageUrl": {
+                    "type": "string",
+                    "description": "Url for actress image"
+                },
+                "siteUrl": {
+                    "type": "string",
+                    "description": "Url for acctress on DMM"
+                }
+            }
+        },
+        "Video": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name of movie in English"
+                },
+                "imageUrl": {
+                    "type": "string",
+                    "description": "Url for movie image"
+                },
+                "siteUrl": {
+                    "type": "string",
+                    "description": "Url for movie on DMM"
+                },
+                "maker": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "description": "ID of maker"
+                            },
+                            "name": {
+                                "type": "string",
+                                "description": "Name of maker in Japanese"
+                            }
+                        }
+                    }
+                },
+                "actress": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "description": "ID of actress"
+                            },
+                            "name": {
+                                "type": "string",
+                                "description": "Name of actress in Japanese"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

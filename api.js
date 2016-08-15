@@ -12,7 +12,7 @@ class Api {
         this._url = `https://api.dmm.com/affiliate/v3/`;
     }
 
-    findActress(name, page = 1, resultPerPage = 100) {
+    findActress(name, offset = 1, resultPerPage = 100) {
         
         var hiraganaName = name ? converter.convert(name.toLowerCase()).hiragana : '';
 
@@ -23,7 +23,7 @@ class Api {
                     api_id: this._apiId,
                     affiliate_id: this._affiliateId,
                     output: 'json',
-                    offset: page,
+                    offset: offset,
                     hits: resultPerPage,
                     keyword: hiraganaName,
                     sort: '-birthday'
@@ -36,6 +36,10 @@ class Api {
                 if (err) {
                     reject(err);
                     return;
+                }
+
+                if (body.result.result_count == 0) {
+                    body.result.actress = [];
                 }
 
                 var actressesWithImage = body.result.actress.filter(actress => actress.imageURL);
@@ -71,7 +75,7 @@ class Api {
         });
     }
 
-    findVideos(actressId, page = 1, resultPerPage = 100) {
+    findVideos(actressId, offset = 1, resultPerPage = 100) {
 
         return new Promise((resolve, reject) => {
             request({
@@ -85,7 +89,7 @@ class Api {
                     floor: 'videoa',
                     article: 'actress',
                     article_id: actressId,
-                    offset: page,
+                    offset: offset,
                     hits: resultPerPage
                 },
                 method: "GET",
@@ -97,7 +101,10 @@ class Api {
                     return;
                 }
 
-                // Get actress with image only
+                if (body.result.result_count == 0) {
+                    body.result.items = [];
+                }
+
                 var result = body.result.items.map(item => {
                     return {
                         name: item.title,
@@ -106,52 +113,6 @@ class Api {
                         date: item.date,
                         maker: item.iteminfo.maker,
                         review: item.review,
-                        actress: item.iteminfo.actress
-                    };
-                });
-
-                resolve({
-                    count: body.result.result_count,
-                    total: body.result.total_count,
-                    result: result
-                });
-            })
-        });
-    }
-
-    getVideos(page = 1, resultPerPage = 100) {
-
-        return new Promise((resolve, reject) => {
-            request({
-                url: this._url + 'ItemList',
-                qs: {
-                    api_id: this._apiId,
-                    affiliate_id: this._affiliateId,
-                    site: 'DMM.R18',
-                    output: 'json',
-                    service: 'digital',
-                    floor: 'videoa',
-                    offset: page,
-                    hits: resultPerPage
-                },
-                method: "GET",
-                json: true,
-
-            }, (err, response, body) => {
-                if (err) {
-                    reject(err);
-                    return;
-                }
-
-                // Get actress with image only
-                var result = body.result.items.map(item => {
-                    return {
-                        name: item.title,
-                        siteUrl: item.URL,
-                        imageUrl: item.imageURL.small,
-                        date: item.date,
-                        review: item.review,
-                        maker: item.iteminfo.maker,
                         actress: item.iteminfo.actress
                     };
                 });

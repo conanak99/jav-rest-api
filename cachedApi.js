@@ -23,11 +23,6 @@ class CachedApi {
          return this._getFromCache(key, this._api.findVideos.bind(this._api, actressId, page, resultPerPage));
     }
 
-    getVideos(page = 1, resultPerPage = 100) {
-        let key = `getVideos-${page}-${resultPerPage}`;
-        return this._getFromCache(key, this._api.getVideos.bind(this._api, page, resultPerPage));
-    }
-
     _getFromCache(key, boundFunction) {
         return new Promise((resolve, reject) => {
             client.get(key, function(err, reply) {
