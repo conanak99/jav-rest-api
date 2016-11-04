@@ -9,11 +9,7 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var cors = require('cors')
 
-
-
-
-
-var api = require("./cachedApi");
+var api = require("./api");
 
 var express = require('express');
 
@@ -34,7 +30,7 @@ app.get('/api/actress', function(req, res) {
   var actressName = query.name || '';
   var offset = query.offset || 1;
   var resultPerPage = query.hits || 100;
-  
+
   api.findActress(actressName, offset, resultPerPage).then(result => {
     res.status(200).json(result);
   });
@@ -42,7 +38,7 @@ app.get('/api/actress', function(req, res) {
 
 app.get('/api/videos/:actressId', function(req, res) {
   var actressId = req.params.actressId;
-  
+
   var query = req.query;
   var offset = query.offset || 1;
   var resultPerPage = query.hits || 100;
@@ -54,8 +50,8 @@ app.get('/api/videos/:actressId', function(req, res) {
 
 
 
-app.set('port', process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 3002);
-app.set('ip', process.env.OPENSHIFT_NODEJS_IP || process.env.IP || "127.0.0.1");
+app.set('port', process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 3000);
+app.set('ip', process.env.OPENSHIFT_NODEJS_IP || process.env.IP || "0.0.0.0");
 
 server.listen(app.get('port'), app.get('ip'), function() {
   var addr = server.address();

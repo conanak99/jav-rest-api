@@ -5,9 +5,9 @@
         "description": "Building your own JAV Heaven API",
         "version": "1.0.0"
     },
-    "host": "jav-rest-api-conanak99.c9users.io",
+    "host": "localhost:3000",
     "schemes": [
-        "https"
+        "http"
     ],
     "basePath": "/api",
     "produces": [

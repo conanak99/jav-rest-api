@@ -3,12 +3,12 @@ var redis = require("redis");
 var config = {
         host: process.env.REDIS_HOST || process.env.IP || "127.0.0.1",
         port: process.env.REDIS_PORT || 6379,
-        password: process.env.REDIS_PASS 
+        password: process.env.REDIS_PASS
     };
-var    client = redis.createClient(config);
 
 class CachedApi {
     constructor() {
+        this._client = redis.createClient(config);
         this._api = require('./api');
         console.log(config);
     }
@@ -25,12 +25,12 @@ class CachedApi {
 
     _getFromCache(key, boundFunction) {
         return new Promise((resolve, reject) => {
-            client.get(key, function(err, reply) {
+            this._client.get(key, function(err, reply) {
                 if (err) {
                     reject(err);
                     return;
                 }
-                
+
                 if (reply === null) {
                     console.log("Cache miss: " + key);
                     boundFunction().then(result => {
