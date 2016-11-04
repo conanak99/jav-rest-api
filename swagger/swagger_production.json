@@ -5,9 +5,9 @@
         "description": "Building your own JAV Heaven API",
         "version": "1.0.0"
     },
-    "host": "javrest-hoangph92.rhcloud.com",
+    "host": "jav.toidicodedao.com",
     "schemes": [
-        "https"
+        "http"
     ],
     "basePath": "/api",
     "produces": [

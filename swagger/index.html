@@ -36,7 +36,7 @@
       var url = window.location.search.match(/url=([^&]+)/);
       if (url && url.length > 1) {
         url = decodeURIComponent(url[1]);
-      } else if (window.location.toString().includes('rhcloud')) {
+      } else if (window.location.toString().includes('toidicodedao')) {
         url = window.location + "swagger_production.json";
       } else {
         url = window.location + "swagger.json";
