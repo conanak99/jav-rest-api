@@ -24,8 +24,9 @@ class CachedApi {
     }
 
     _getFromCache(key, boundFunction) {
+	const client = this._client;
         return new Promise((resolve, reject) => {
-            this._client.get(key, function(err, reply) {
+           client.get(key, (err, reply) => {
                 if (err) {
                     reject(err);
                     return;

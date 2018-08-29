@@ -9,7 +9,7 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var cors = require('cors')
 
-var api = require("./api");
+var api = require("./cachedApi");
 
 var express = require('express');
 
