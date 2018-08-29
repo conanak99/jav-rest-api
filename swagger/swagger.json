@@ -5,7 +5,6 @@
         "description": "Building your own JAV Heaven API",
         "version": "1.0.0"
     },
-    "host": "localhost:3000",
     "schemes": [
         "http"
     ],
