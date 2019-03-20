@@ -5,7 +5,7 @@ services:
                 environment:
                         - REDIS_HOST=redis
                 ports:
-                        - "4005:3000"
+                        - "3000:3000"
                 depends_on:
                         - redis
         redis:
