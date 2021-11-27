@@ -7,8 +7,11 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var cors = require('cors')
 
-// var api = require("./cachedApi");
-var api = require("./api");
+const useCache = process.env.USE_CACHE === 'true'
+console.log({
+  useCache
+})
+const api = useCache ? require("./cachedApi") : require("./api");
 
 var express = require('express');
 

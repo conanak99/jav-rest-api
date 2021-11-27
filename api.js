@@ -115,8 +115,6 @@ class Api {
                 }
 
                 var result = body.result.items.map(item => {
-                    console.log(item.imageURL)
-
                     return {
                         name: item.title,
                         siteUrl: item.URL,
