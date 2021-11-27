@@ -1,10 +1,10 @@
 "use strict";
 var redis = require("redis");
 var config = {
-        host: process.env.REDIS_HOST || process.env.IP || "127.0.0.1",
-        port: process.env.REDIS_PORT || 6379,
-        password: process.env.REDIS_PASS
-    };
+    host: process.env.REDIS_HOST || process.env.IP || "127.0.0.1",
+    port: process.env.REDIS_PORT || 6379,
+    password: process.env.REDIS_PASS
+};
 
 class CachedApi {
     constructor() {
@@ -18,15 +18,20 @@ class CachedApi {
         return this._getFromCache(key, this._api.findActress.bind(this._api, name, page, resultPerPage));
     }
 
+    findActressByID(actressID) {
+        let key = `findActressByID-${actressID}`;
+        return this._getFromCache(key, this._api.findActressByID.bind(this._api, actressID));
+    }
+
     findVideos(actressId, page = 1, resultPerPage = 100) {
         let key = `findVideos-${actressId}-${page}-${resultPerPage}`;
-         return this._getFromCache(key, this._api.findVideos.bind(this._api, actressId, page, resultPerPage));
+        return this._getFromCache(key, this._api.findVideos.bind(this._api, actressId, page, resultPerPage));
     }
 
     _getFromCache(key, boundFunction) {
-	const client = this._client;
+        const client = this._client;
         return new Promise((resolve, reject) => {
-           client.get(key, (err, reply) => {
+            client.get(key, (err, reply) => {
                 if (err) {
                     reject(err);
                     return;
@@ -38,8 +43,7 @@ class CachedApi {
                         client.set(key, JSON.stringify(result));
                         resolve(result);
                     });
-                }
-                else {
+                } else {
                     console.log("Cache hit: " + key);
                     resolve(JSON.parse(reply));
                 }

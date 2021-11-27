@@ -10,10 +10,10 @@ class Api {
         this._affiliateId = "10278-996";
 
         this._url = `https://api.dmm.com/affiliate/v3/`;
+        this._cache = {};
     }
 
     findActress(name, offset = 1, resultPerPage = 100) {
-        
         var hiraganaName = name ? converter.convert(name.toLowerCase()).hiragana : '';
 
         return new Promise((resolve, reject) => {
@@ -66,17 +66,26 @@ class Api {
                         siteUrl: actress.listURL.digital
                     }
                 });
+
+                for (const actress of result) {
+                    this._cache[actress.id] = actress
+                }
+
                 resolve({
-                    count: body.result.result_count,
-                    total: body.result.total_count,
+                    count: parseInt(body.result.result_count, 10),
+                    total: parseInt(body.result.total_count, 10),
                     result: result
                 });
             })
         });
     }
 
-    findVideos(actressId, offset = 1, resultPerPage = 100) {
+    findActressByID(actressID) {
+        const actress = this._cache[actressID] || {}
+        return Promise.resolve(actress)
+    }
 
+    findVideos(actressId, offset = 1, resultPerPage = 100) {
         return new Promise((resolve, reject) => {
             request({
                 url: this._url + 'ItemList',
@@ -106,10 +115,12 @@ class Api {
                 }
 
                 var result = body.result.items.map(item => {
+                    console.log(item.imageURL)
+
                     return {
                         name: item.title,
                         siteUrl: item.URL,
-                        imageUrl: item.imageURL.small.replace('http', 'https'),
+                        imageUrl: item.imageURL.large,
                         date: item.date,
                         maker: item.iteminfo.maker,
                         review: item.review,
@@ -118,8 +129,8 @@ class Api {
                 });
 
                 resolve({
-                    count: body.result.result_count,
-                    total: body.result.total_count,
+                    count: parseInt(body.result.result_count, 10),
+                    total: parseInt(body.result.total_count, 10),
                     result: result
                 });
             })
