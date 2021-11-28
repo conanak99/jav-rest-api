@@ -2,20 +2,26 @@
   "name": "jav-rest-api",
   "version": "0.0.0",
   "description": "A wrapper of DMM 18 for querying JAV actress and movie.",
-  "main": "server.js",
+  "main": "src/index.js",
   "repository": "",
   "scripts": {
-    "start": "node server.js"
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js"
   },
-  "author": "Mostafa Eweda <mo.eweda@gmail.com>",
+  "author": "Harry Pham <huyhoang8a5@gmail.com>",
   "dependencies": {
-    "body-parser": "^1.15.2",
-    "cors": "^2.7.1",
-    "express": "~3.2.4",
+    "@koa/router": "^10.1.1",
     "jp-conversion": "0.0.7",
+    "koa": "^2.13.4",
+    "koa-logger": "^3.2.1",
+    "koa2-cors": "^2.0.6",
     "lodash": "^4.14.1",
-    "morgan": "^1.7.0",
     "redis": "^2.6.2",
-    "request": "^2.74.0"
+    "request": "^2.74.0",
+    "swagger2": "^3.0.0",
+    "swagger2-koa": "^3.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }

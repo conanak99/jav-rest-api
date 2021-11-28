@@ -1,8 +1,8 @@
 "use strict";
 // Get image from xkcn.info
-var request = require("request");
-var converter = require("jp-conversion");
-var _ = require('lodash');
+const request = require("request");
+const converter = require("jp-conversion");
+const _ = require('lodash');
 
 class Api {
     constructor() {
@@ -14,7 +14,7 @@ class Api {
     }
 
     findActress(name, offset = 1, resultPerPage = 100) {
-        var hiraganaName = name ? converter.convert(name.toLowerCase()).hiragana : '';
+        const hiraganaName = name ? converter.convert(name.toLowerCase()).hiragana : '';
 
         return new Promise((resolve, reject) => {
             request({
@@ -42,15 +42,17 @@ class Api {
                     body.result.actress = [];
                 }
 
-                var actressesWithImage = body.result.actress.filter(actress => actress.imageURL);
+                const actressesWithImage = body.result.actress.filter(actress => actress.imageURL);
 
                 // Get actress with image only
-                var result = actressesWithImage.map(actress => {
+                const result = actressesWithImage.map(actress => {
                     return {
                         id: actress.id,
                         name: actress.imageURL.large
                             .replace('http://pics.dmm.co.jp/mono/actjpgs/', '')
                             .replace('.jpg', '')
+                            .replace('hu', 'fu')
+                            .replace('tu', 'tsu')
                             .replace(/[0-9]/g, '')
                             .split('_')
                             .map(_.capitalize)
@@ -114,14 +116,20 @@ class Api {
                     body.result.items = [];
                 }
 
-                var result = body.result.items.map(item => {
+                const result = body.result.items.map(item => {
                     return {
                         name: item.title,
                         siteUrl: item.URL,
-                        imageUrl: item.imageURL.large,
+                        imageUrl: item.imageURL.list,
                         date: item.date,
                         maker: item.iteminfo.maker,
-                        review: item.review,
+                        review: item.review ? {
+                            count: item.review.count,
+                            average: parseFloat(item.review.average)
+                        } : {
+                            count: 0,
+                            average: 3
+                        },
                         actress: item.iteminfo.actress
                     };
                 });

@@ -1,6 +1,6 @@
 "use strict";
-var redis = require("redis");
-var config = {
+const redis = require("redis");
+const config = {
     host: process.env.REDIS_HOST || process.env.IP || "127.0.0.1",
     port: process.env.REDIS_PORT || 6379,
     password: process.env.REDIS_PASS
@@ -14,17 +14,17 @@ class CachedApi {
     }
 
     findActress(name, page = 1, resultPerPage = 100) {
-        let key = `findActress-${name}-${page}-${resultPerPage}`;
+        const key = `findActress-${name}-${page}-${resultPerPage}`;
         return this._getFromCache(key, this._api.findActress.bind(this._api, name, page, resultPerPage));
     }
 
     findActressByID(actressID) {
-        let key = `findActressByID-${actressID}`;
+        const key = `findActressByID-${actressID}`;
         return this._getFromCache(key, this._api.findActressByID.bind(this._api, actressID));
     }
 
     findVideos(actressId, page = 1, resultPerPage = 100) {
-        let key = `findVideos-${actressId}-${page}-${resultPerPage}`;
+        const key = `findVideos-${actressId}-${page}-${resultPerPage}`;
         return this._getFromCache(key, this._api.findVideos.bind(this._api, actressId, page, resultPerPage));
     }
 
